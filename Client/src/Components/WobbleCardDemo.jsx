@@ -27,13 +27,13 @@ function WobbleCardDemo() {
               Our team blends passion and precision to craft digital solutions that don't just work—they wow. We're agile, accountable, and obsessed with results.
             </p>
           </div>
-          <img
+          {/* <img
             src="/team-culture.webp"
             width={500}
             height={500}
             alt="team culture"
             className="absolute -right-4 lg:-right-[40%] grayscale filter -bottom-10 object-contain rounded-2xl"
-          />
+          /> */}
         </WobbleCard>
 
         {/* Innovation Card */}
@@ -56,13 +56,13 @@ function WobbleCardDemo() {
               Whether it’s empowering startups or supporting enterprises, we focus on delivering measurable outcomes and long-term value—not just deliverables.
             </p>
           </div>
-          <img
+          {/* <img
             src="/impact.webp"
             width={500}
             height={500}
             alt="impact illustration"
             className="absolute -right-10 md:-right-[40%] lg:-right-[20%] -bottom-10 object-contain rounded-2xl"
-          />
+          /> */}
         </WobbleCard>
       </div>
     </div>

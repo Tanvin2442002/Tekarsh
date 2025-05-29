@@ -2,6 +2,7 @@ import gsap from "gsap"
 import { ScrollTrigger } from "gsap/all"
 import { useEffect, useRef, useState } from "react"
 import { AuroraBackground } from "../Components/AuroraBackground"
+import { useNavigate } from "react-router-dom"
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -16,15 +17,11 @@ const Hero = () => {
   const linesRef = useRef(null)
 
   // For Next.js, we'll use useRouter instead of useNavigate
-  const navigateToContactForm = () => {
-    // For Next.js, we would use router.push('/contact#contact-form-section')
-    // But for this example, we'll use a simple scroll function
-    const contactFormSection = document.getElementById("contact-form-section")
-    if (contactFormSection) {
-      contactFormSection.scrollIntoView({ behavior: "smooth" })
-    }
-  }
+ const navigate = useNavigate(); 
 
+  const navigateToContactForm = () => {
+    navigate("/contact#contact-form-section");
+  };
   // Base phrase and rotating words
   const basePhrase = "WE DESIGN DIGITAL"
   const rotatingWords = ["EXPERIENCES", "SOLUTIONS", "PRODUCTS", "FUTURES", "INNOVATIONS"]

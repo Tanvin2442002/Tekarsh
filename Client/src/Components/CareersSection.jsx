@@ -12,8 +12,10 @@ function CareersSection() {
   const [error, setError] = useState(null);
   const[isModalOpen, setIsModalOpen] = useState(false);
 
+  const url = import.meta.env.VITE_API_URL;
+
   useEffect(() => {
-    fetch("http://localhost:5000/api/jobs")
+    fetch(`${url}/api/jobs`)
       .then((response) => {
         if (!response.ok) {
           throw new Error("Failed to fetch jobs");

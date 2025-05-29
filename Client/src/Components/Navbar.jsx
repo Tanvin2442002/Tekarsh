@@ -1,19 +1,20 @@
 "use client"
 
-import { useEffect, useState } from "react"
-import { useRef } from "react"
+import { useEffect, useState, useRef } from "react"
 import { useWindowScroll } from "react-use"
 import gsap from "gsap"
 
 const Navbar = () => {
   const navbarref = useRef(null)
   const mobileMenuRef = useRef(null)
+
   const items = [
     { name: "Home", path: "/" },
     { name: "Services", path: "/services" },
     { name: "Contact", path: "/contact" },
     { name: "Careers", path: "/career" },
   ]
+
   const [lastScrollY, setLastScrollY] = useState(0)
   const [isVisible, setIsVisible] = useState(true)
   const [isScrolled, setIsScrolled] = useState(false)
@@ -22,43 +23,48 @@ const Navbar = () => {
   const { y: currentScrollY } = useWindowScroll()
 
   useEffect(() => {
-    if (currentScrollY === 0) {
-      setIsVisible(true)
-      setIsScrolled(false)
-      navbarref.current.classList.remove(
-        "backdrop-blur-md",
-        "bg-white/30",
-        "border",
-        "border-white/20",
-        "shadow-md",
-        "rounded-lg",
-      )
-    } else if (currentScrollY > lastScrollY) {
-      setIsVisible(false)
-      setIsScrolled(true)
-      setIsMobileMenuOpen(false) // Close mobile menu when scrolling down
-      navbarref.current.classList.add(
-        "backdrop-blur-md",
-        "bg-white/30",
-        "border",
-        "border-white/20",
-        "shadow-md",
-        "rounded-lg",
-      )
-    } else if (currentScrollY < lastScrollY) {
-      setIsVisible(true)
-      setIsScrolled(true)
-      navbarref.current.classList.add(
-        "backdrop-blur-md",
-        "bg-white/30",
-        "border",
-        "border-white/20",
-        "shadow-md",
-        "rounded-lg",
-      )
+    const handleScroll = () => {
+      if (currentScrollY === 0) {
+        setIsVisible(true)
+        setIsScrolled(false)
+        navbarref.current?.classList.remove(
+          "backdrop-blur-md",
+          "bg-white/30",
+          "border",
+          "border-white/20",
+          "shadow-md",
+          "rounded-lg"
+        )
+      } else if (currentScrollY > lastScrollY) {
+        setIsVisible(false)
+        setIsScrolled(true)
+        setIsMobileMenuOpen(false)
+        navbarref.current?.classList.add(
+          "backdrop-blur-md",
+          "bg-white/30",
+          "border",
+          "border-white/20",
+          "shadow-md",
+          "rounded-lg"
+        )
+      } else if (currentScrollY < lastScrollY) {
+        setIsVisible(true)
+        setIsScrolled(true)
+        navbarref.current?.classList.add(
+          "backdrop-blur-md",
+          "bg-white/30",
+          "border",
+          "border-white/20",
+          "shadow-md",
+          "rounded-lg"
+        )
+      }
+      setLastScrollY(currentScrollY)
     }
-    setLastScrollY(currentScrollY)
-  }, [currentScrollY, lastScrollY])
+
+    handleScroll()
+    // only run on scroll updates
+  }, [currentScrollY]) // ✅ removed lastScrollY from dependency array
 
   useEffect(() => {
     gsap.to(navbarref.current, {
@@ -114,7 +120,7 @@ const Navbar = () => {
                     onClick={() => handleNavigation(item.path)}
                     className="relative ms-10 text-[15px] font-bold uppercase text-black
                     after:absolute after:-bottom-0.5 after:left-0 after:h-[2px] after:w-full after:origin-bottom-right after:scale-x-0 
-                  after:bg-black hover:after:bg-black 
+                    after:bg-black hover:after:bg-black 
                     after:transition-transform after:duration-300 after:ease-[cubic-bezier(0.65_0.05_0.36_1)] 
                     hover:after:origin-bottom-left hover:after:scale-x-100 cursor-pointer"
                   >
@@ -173,7 +179,10 @@ const Navbar = () => {
 
       {/* Mobile Menu Overlay */}
       {isMobileMenuOpen && (
-        <div className="fixed inset-0 bg-black/20 z-30 md:hidden" onClick={() => setIsMobileMenuOpen(false)}></div>
+        <div
+          className="fixed inset-0 bg-black/20 z-30 md:hidden"
+          onClick={() => setIsMobileMenuOpen(false)}
+        ></div>
       )}
     </>
   )

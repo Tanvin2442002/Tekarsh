@@ -2,10 +2,27 @@ import { useState } from "react"
 import { motion } from "framer-motion"
 
 import { useToast } from "./toast"
+ import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 
-
+const url = import.meta.env.VITE_API_URL
 
 const ContactForm = () => {
+
+
+useEffect(() => {
+  const hash = window.location.hash;
+  if (hash) {
+    const element = document.querySelector(hash);
+    if (element) {
+      setTimeout(() => {
+        element.scrollIntoView({ behavior: "smooth" });
+      }, 100); // Give React time to render the element
+    }
+  }
+}, []);
+
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -108,7 +125,7 @@ const ContactForm = () => {
   setIsSubmitting(true);
 
   try {
-    const response = await fetch("http://localhost:5000/api/messages", {
+    const response = await fetch(`${url}/api/messages`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

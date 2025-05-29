@@ -83,15 +83,16 @@ export function WorldMap({ dots = [], lineColor = "#228B22" }) {
     const midY = Math.min(start.y, end.y) - 50;
     return `M ${start.x} ${start.y} Q ${midX} ${midY} ${end.x} ${end.y}`;
   };
-
   const AnimatedPulseDot = ({ cx, cy }) => (
     <motion.circle
       cx={cx}
       cy={cy}
-      r={2}
       fill={lineColor}
-      initial={{ opacity: 0.5 }}
-      animate={{ r: [2, 8], opacity: [0.5, 0] }}
+      initial={{ r: 2, opacity: 0.5 }}
+      animate={{
+        r: [2, 8, 2], // animate radius up and back
+        opacity: [0.5, 0, 0.5], // animate opacity fade and restore
+      }}
       transition={{
         duration: 1.5,
         repeat: Infinity,
@@ -116,7 +117,10 @@ export function WorldMap({ dots = [], lineColor = "#228B22" }) {
 
   return (
     <div className="relative w-full h-full bg-black">
-      <h1 className="justify-items-center  font-bold text-center text-[#519444]  md:text-[4rem]"> Our Partners - All Across The Globe</h1>
+      <h1 className="justify-items-center  font-bold text-center text-[#519444]  md:text-[4rem]">
+        {" "}
+        Our Partners - All Across The Globe
+      </h1>
       <div
         className="w-full aspect-[2/1] dark:bg-black bg-white relative font-sans"
         ref={wrapperRef}
@@ -193,7 +197,6 @@ export function WorldMap({ dots = [], lineColor = "#228B22" }) {
           })}
         </svg>
       </div>
-      
     </div>
   );
 }

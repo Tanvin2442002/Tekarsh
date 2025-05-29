@@ -11,6 +11,8 @@ import {
 } from "lucide-react";
 import { Toast, useToast } from "./toast";
 
+const url = import.meta.env.VITE_API_URL
+
 const Footer = () => {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
@@ -19,7 +21,7 @@ const Footer = () => {
 
   const handleSubscribe = async () => {
     try {
-      const response = await fetch("http://localhost:5000/api/subscribe", {
+      const response = await fetch(`${url}/api/subscribe`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),

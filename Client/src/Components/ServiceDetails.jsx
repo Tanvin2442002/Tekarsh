@@ -1,19 +1,27 @@
-"use client"
+"use client";
 
-import { useRef } from "react"
-import { motion, useInView } from "framer-motion"
+import { useRef } from "react";
+import { motion, useInView } from "framer-motion";
+import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 
 const ServiceDetails = () => {
-  const containerRef = useRef(null)
-  const isInView = useInView(containerRef, { once: true, margin: "-100px" })
+  const containerRef = useRef(null);
+  const isInView = useInView(containerRef, { once: true, margin: "-100px" });
 
-  // Function to scroll to specific service section
-  const scrollToServiceDetail = (serviceId) => {
-    const serviceSection = document.getElementById(serviceId)
-    if (serviceSection) {
-      serviceSection.scrollIntoView({ behavior: "smooth" })
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.hash) {
+      const target = document.getElementById(location.hash.substring(1));
+      if (target) {
+        // Delay to ensure the DOM is ready
+        setTimeout(() => {
+          target.scrollIntoView({ behavior: "smooth" });
+        }, 100);
+      }
     }
-  }
+  }, [location]);
 
   const services = [
     {
@@ -104,10 +112,14 @@ const ServiceDetails = () => {
         "Product Scaling & Optimization",
       ],
     },
-  ]
+  ];
 
   return (
-    <section ref={containerRef} id="service-details-section" className="py-20 bg-gradient-to-b from-white to-green-50">
+    <section
+      ref={containerRef}
+      id="service-details-section"
+      className="py-20 bg-gradient-to-b from-white to-green-50"
+    >
       <div className="max-w-7xl mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -119,25 +131,30 @@ const ServiceDetails = () => {
             Our <span className="text-[#519444]">Expertise</span>
           </h2>
           <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-            Discover how our comprehensive services can transform your business and drive innovation
+            Discover how our comprehensive services can transform your business
+            and drive innovation
           </p>
         </motion.div>
 
         <div className="space-y-32">
           {services.map((service, index) => (
-            <ServiceDetailItem key={service.id} service={service} index={index} />
+            <ServiceDetailItem
+              key={service.id}
+              service={service}
+              index={index}
+            />
           ))}
         </div>
       </div>
     </section>
-  )
-}
+  );
+};
 
 const ServiceDetailItem = ({ service, index }) => {
-  const ref = useRef(null)
-  const isInView = useInView(ref, { once: true, margin: "-150px" })
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-150px" });
 
-  const isEven = index % 2 === 0
+  const isEven = index % 2 === 0;
 
   return (
     <div ref={ref} id={service.id} className="scroll-mt-24">
@@ -145,17 +162,25 @@ const ServiceDetailItem = ({ service, index }) => {
         initial={{ opacity: 0 }}
         animate={isInView ? { opacity: 1 } : { opacity: 0 }}
         transition={{ duration: 0.8 }}
-        className={`flex flex-col ${isEven ? "lg:flex-row" : "lg:flex-row-reverse"} items-stretch gap-12`}
+        className={`flex flex-col ${
+          isEven ? "lg:flex-row" : "lg:flex-row-reverse"
+        } items-stretch gap-12`}
       >
         {/* Image Section */}
         <motion.div
           initial={{ opacity: 0, x: isEven ? -50 : 50 }}
-          animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: isEven ? -50 : 50 }}
+          animate={
+            isInView
+              ? { opacity: 1, x: 0 }
+              : { opacity: 0, x: isEven ? -50 : 50 }
+          }
           transition={{ duration: 0.8, delay: 0.2 }}
           className="lg:w-5/12 flex"
         >
           <div className="relative rounded-2xl overflow-hidden shadow-xl w-full h-full min-h-[500px]">
-            <div className={`absolute inset-0 bg-gradient-to-br ${service.color} opacity-80 mix-blend-multiply`}></div>
+            <div
+              className={`absolute inset-0 bg-gradient-to-br ${service.color} opacity-80 mix-blend-multiply`}
+            ></div>
             <img
               src={service.image || "/placeholder.svg"}
               alt={service.title}
@@ -164,7 +189,9 @@ const ServiceDetailItem = ({ service, index }) => {
             <div className="absolute inset-0 flex flex-col items-center justify-center p-6 text-white">
               <span className="text-7xl mb-6">{service.icon}</span>
               <div className="bg-white/10 backdrop-blur-sm p-6 rounded-xl max-w-md">
-                <h4 className="text-2xl font-bold mb-3 text-white text-center">Why Choose Our {service.title}?</h4>
+                <h4 className="text-2xl font-bold mb-3 text-white text-center">
+                  Why Choose Our {service.title}?
+                </h4>
                 <ul className="space-y-2">
                   {service.features.slice(0, 3).map((feature, i) => (
                     <li key={i} className="flex items-center">
@@ -174,7 +201,9 @@ const ServiceDetailItem = ({ service, index }) => {
                   ))}
                 </ul>
                 <div className="mt-4 text-center">
-                  <span className="inline-block border-b border-white/70 text-white/90 text-sm">And much more...</span>
+                  <span className="inline-block border-b border-white/70 text-white/90 text-sm">
+                    And much more...
+                  </span>
                 </div>
               </div>
             </div>
@@ -184,7 +213,11 @@ const ServiceDetailItem = ({ service, index }) => {
         {/* Content Section */}
         <motion.div
           initial={{ opacity: 0, x: isEven ? 50 : -50 }}
-          animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: isEven ? 50 : -50 }}
+          animate={
+            isInView
+              ? { opacity: 1, x: 0 }
+              : { opacity: 0, x: isEven ? 50 : -50 }
+          }
           transition={{ duration: 0.8, delay: 0.4 }}
           className="lg:w-7/12"
         >
@@ -194,7 +227,9 @@ const ServiceDetailItem = ({ service, index }) => {
             >
               {service.title}
             </div>
-            <h3 className="text-2xl md:text-3xl font-bold mb-4">Transforming Businesses Through {service.title}</h3>
+            <h3 className="text-2xl md:text-3xl font-bold mb-4">
+              Transforming Businesses Through {service.title}
+            </h3>
 
             <div className="prose prose-emerald max-w-none mb-6">
               {service.description.split("\n\n").map((paragraph, i) => (
@@ -211,11 +246,15 @@ const ServiceDetailItem = ({ service, index }) => {
                   <motion.div
                     key={i}
                     initial={{ opacity: 0, y: 10 }}
-                    animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
+                    animate={
+                      isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }
+                    }
                     transition={{ duration: 0.4, delay: 0.6 + i * 0.1 }}
                     className="flex items-center"
                   >
-                    <div className={`h-2 w-2 rounded-full bg-gradient-to-r ${service.color} mr-2`}></div>
+                    <div
+                      className={`h-2 w-2 rounded-full bg-gradient-to-r ${service.color} mr-2`}
+                    ></div>
                     <span className="text-gray-700">{feature}</span>
                   </motion.div>
                 ))}
@@ -227,19 +266,12 @@ const ServiceDetailItem = ({ service, index }) => {
               animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
               transition={{ duration: 0.6, delay: 0.8 }}
               className="mt-8"
-            >
-              <button
-                onClick={() => document.getElementById(service.id).scrollIntoView({ behavior: "smooth" })}
-                className={`bg-gradient-to-r ${service.color} text-white px-6 py-3 rounded-lg font-medium hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1`}
-              >
-                Learn More About {service.title}
-              </button>
-            </motion.div>
+            ></motion.div>
           </div>
         </motion.div>
       </motion.div>
     </div>
-  )
-}
+  );
+};
 
-export default ServiceDetails
+export default ServiceDetails;

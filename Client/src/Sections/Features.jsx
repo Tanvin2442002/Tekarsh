@@ -1,29 +1,28 @@
-"use client"
-import { useRef, useState } from "react"
-import { useNavigate } from "react-router-dom"
+"use client";
+import { useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const TiltingCard = ({ children, className = "" }) => {
-  const [transformStyle, setTransformStyle] = useState("")
-  const itemRef = useRef(null)
+  const [transformStyle, setTransformStyle] = useState("");
+  const itemRef = useRef(null);
 
   const handleMouseMove = (event) => {
-    if (!itemRef.current) return
+    if (!itemRef.current) return;
 
-    const { left, top, width, height } = itemRef.current.getBoundingClientRect()
+    const { left, top, width, height } = itemRef.current.getBoundingClientRect();
+    const relativeX = (event.clientX - left) / width;
+    const relativeY = (event.clientY - top) / height;
 
-    const relativeX = (event.clientX - left) / width
-    const relativeY = (event.clientY - top) / height
+    const tiltX = (relativeY - 0.5) * 5;
+    const tiltY = (relativeX - 0.5) * -5;
 
-    const tiltX = (relativeY - 0.5) * 5
-    const tiltY = (relativeX - 0.5) * -5
-
-    const newTransform = `perspective(700px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale3d(.95, .95, .95)`
-    setTransformStyle(newTransform)
-  }
+    const newTransform = `perspective(700px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale3d(.95, .95, .95)`;
+    setTransformStyle(newTransform);
+  };
 
   const handleMouseLeave = () => {
-    setTransformStyle("")
-  }
+    setTransformStyle("");
+  };
 
   return (
     <div
@@ -35,8 +34,8 @@ const TiltingCard = ({ children, className = "" }) => {
     >
       {children}
     </div>
-  )
-}
+  );
+};
 
 const Cards = ({ src, title, description, buttonText, onClick }) => {
   return (
@@ -48,25 +47,26 @@ const Cards = ({ src, title, description, buttonText, onClick }) => {
           {description && <p className="mt-5 max-w-96 text-xs md:text-base">{description}</p>}
         </div>
         {buttonText && (
-          <button
-            onClick={onClick}
-            className="mt-5 w-fit rounded-md bg-white px-4 py-2 text-sm font-semibold text-black hover:bg-gray-100 transition"
-          >
-            {buttonText}
-          </button>
+          <div className="mt-5">
+            <button
+              onClick={onClick}
+              className="w-fit rounded-md bg-white px-4 py-2 text-sm font-semibold text-black hover:bg-[#519444] hover:text-white transition"
+            >
+              {buttonText}
+            </button>
+          </div>
         )}
       </div>
     </div>
-  )
-}
+  );
+};
 
 const Features = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-  // Function to navigate to specific service sections
   const navigateToService = (serviceId) => {
-    navigate(`/services#${serviceId}`)
-  }
+    navigate(`/services#${serviceId}`);
+  };
 
   return (
     <section className="bg-white pb-52">
@@ -78,6 +78,7 @@ const Features = () => {
             project reflects our dedication to creating value that lasts long beyond the visible.
           </p>
         </div>
+
         <TiltingCard className="border border-white/20 relative mb-7 h-96 w-full overflow-hidden rounded-md md:h-[65vh]">
           <Cards
             src="/card1.mp4"
@@ -87,8 +88,9 @@ const Features = () => {
             onClick={() => navigateToService("software-development")}
           />
         </TiltingCard>
-        <div className="grid h-[135vh] w-full grid-cols-2 grid-rows-3 gap-7">
-          <TiltingCard className="relative border border-white/20 col-span-2 overflow-hidden rounded-md transition-transform duration-300 ease-out row-span-1 md:col-span-1 md:row-span-2">
+
+        <div className="grid w-full grid-cols-1 md:grid-cols-2 grid-rows-3 gap-7 auto-rows-fr">
+          <TiltingCard className="relative border border-white/20 overflow-hidden rounded-md transition-transform duration-300 ease-out md:row-span-2">
             <Cards
               src="/card1.mp4"
               title="Quality Assurance"
@@ -97,7 +99,8 @@ const Features = () => {
               onClick={() => navigateToService("quality-assurance")}
             />
           </TiltingCard>
-          <TiltingCard className="relative border border-white/20 col-span-2 overflow-hidden rounded-md transition-transform duration-300 ease-out row-span-1 ms-32 md:col-span-1 md:ms-0">
+
+          <TiltingCard className="relative border border-white/20 overflow-hidden rounded-md transition-transform duration-300 ease-out">
             <Cards
               src="/card1.mp4"
               title="Business Process Outsourcing"
@@ -106,7 +109,8 @@ const Features = () => {
               onClick={() => navigateToService("business-process-outsourcing")}
             />
           </TiltingCard>
-          <TiltingCard className="relative border border-white/20 col-span-2 overflow-hidden rounded-md transition-transform duration-300 ease-out me-14 md:col-span-1 md:me-0">
+
+          <TiltingCard className="relative border border-white/20 overflow-hidden rounded-md transition-transform duration-300 ease-out">
             <Cards
               src="/card1.mp4"
               title="Product Services"
@@ -115,20 +119,20 @@ const Features = () => {
               onClick={() => navigateToService("product-services")}
             />
           </TiltingCard>
-          <div className="relative col-span-1 row-span-1 overflow-hidden rounded-md transition-transform duration-300 ease-out">
-            <div className="flex size-full flex-col justify-between p-5 bg-violet-300 text-blue-50">
-              <h1 className="uppercase md:text-6xl text-4xl font-black font-zentry max-w-64 text-black">
-                More Services Coming soon
-              </h1>
-            </div>
+
+          <div className="relative overflow-hidden rounded-md transition-transform duration-300 ease-out bg-violet-300 flex items-center justify-center p-5">
+            <h1 className="uppercase md:text-6xl text-4xl font-black font-zentry max-w-64 text-black">
+              More Services Coming soon
+            </h1>
           </div>
-          <TiltingCard className="relative col-span-1 row-span-1 overflow-hidden rounded-md transition-transform duration-300 ease-out">
+
+          <TiltingCard className="relative overflow-hidden rounded-md transition-transform duration-300 ease-out">
             <video src="/card1.mp4" loop muted autoPlay className="size-full object-cover object-center" />
           </TiltingCard>
         </div>
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default Features
+export default Features;

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { AlertCircle, CheckCircle2, FileText, Upload } from "lucide-react";
 import { useToast } from "./toast"
+const url = import.meta.env.VITE_API_URL;
 
 export default function JobApplicationForm({ jobid }) {
   const [formData, setFormData] = useState({
@@ -114,7 +115,7 @@ export default function JobApplicationForm({ jobid }) {
         console.log(pair[0] + ":", pair[1]);
       }
 
-      const response = await fetch("http://localhost:5000/api/upload", {
+      const response = await fetch(`${url}/api/upload`, {
         method: "POST",
         body: formDataToSend,
       });
@@ -125,7 +126,7 @@ export default function JobApplicationForm({ jobid }) {
 
       console.log("Application submitted successfully:", result);
 
-      const verdictRes = await fetch("http://localhost:5000/api/getverdict", {
+      const verdictRes = await fetch(`${url}/api/getverdict`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -148,7 +149,7 @@ export default function JobApplicationForm({ jobid }) {
       });
         try {
           const response = await fetch(
-            "http://localhost:5000/api/deleteApplication",
+            `${url}/api/deleteApplication`,
             {
               method: "POST",
               headers: {
@@ -175,7 +176,7 @@ export default function JobApplicationForm({ jobid }) {
         return;
       } else {
         try {
-          const response = await fetch("http://localhost:5000/api/resumes", {
+          const response = await fetch(`${url}/api/resumes`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",

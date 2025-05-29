@@ -1,28 +1,29 @@
-"use client"
+"use client";
 
-import { useRef, useState, useEffect } from "react"
-import gsap from "gsap"
-import { ScrollTrigger } from "gsap/ScrollTrigger"
-import { Draggable } from "gsap/Draggable"
-import AnimatedTitle from "../Components/AnimatedTitle"
-import ScrollRevealinfo from "../Components/ScrollRevealinfo"
-import { Users, Globe, Target, Shield } from "lucide-react"
+import { useRef, useState, useEffect } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { Draggable } from "gsap/Draggable";
+import AnimatedTitle from "../Components/AnimatedTitle";
+import ScrollRevealinfo from "../Components/ScrollRevealinfo";
+import { Users, Globe, Target, Shield } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 // Make sure GSAP plugins are registered outside the component
 if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger, Draggable)
+  gsap.registerPlugin(ScrollTrigger, Draggable);
 }
 
 const About = () => {
-  const titleRef = useRef(null)
-  const containerRef = useRef(null)
-  const subtitleRef = useRef(null)
-  const descriptionRef = useRef(null)
-  const statsRef = useRef(null)
-  const featuresRef = useRef(null)
-  const techRef = useRef(null)
-  const [draggedCount, setDraggedCount] = useState(0)
-  const [hoveredTech, setHoveredTech] = useState(null)
+  const titleRef = useRef(null);
+  const containerRef = useRef(null);
+  const subtitleRef = useRef(null);
+  const descriptionRef = useRef(null);
+  const statsRef = useRef(null);
+  const featuresRef = useRef(null);
+  const techRef = useRef(null);
+  const [draggedCount, setDraggedCount] = useState(0);
+  const [hoveredTech, setHoveredTech] = useState(null);
 
   // Technology data with proper representations
   const frontendTechnologies = [
@@ -114,7 +115,7 @@ const About = () => {
       description: "Utility-first CSS framework",
       experience: "3+ years",
     },
-  ]
+  ];
 
   const backendTechnologies = [
     {
@@ -181,15 +182,15 @@ const About = () => {
       description: "Systems programming language",
       experience: "1+ years",
     },
-  ]
+  ];
 
   useEffect(() => {
-    if (typeof window === "undefined") return
+    if (typeof window === "undefined") return;
 
     // Fix stat counter animation
-    const statNumbers = document.querySelectorAll(".stat-number")
+    const statNumbers = document.querySelectorAll(".stat-number");
     statNumbers.forEach((stat) => {
-      const targetValue = Number.parseInt(stat.getAttribute("data-value"))
+      const targetValue = Number.parseInt(stat.getAttribute("data-value"));
 
       gsap.fromTo(
         stat,
@@ -204,27 +205,27 @@ const About = () => {
             start: "top 80%",
             toggleActions: "play none none reverse",
           },
-        },
-      )
-    })
+        }
+      );
+    });
 
     // Seamless infinite scroll setup
     const setupInfiniteScroll = (selector, direction = 1, duration = 20) => {
-      const container = document.querySelector(selector)
-      if (!container) return
+      const container = document.querySelector(selector);
+      if (!container) return;
 
-      const items = container.children
-      if (items.length === 0) return
+      const items = container.children;
+      if (items.length === 0) return;
 
       // Calculate total width of one set of items
-      const itemWidth = 104 // 80px + 24px gap
-      const totalWidth = itemWidth * (items.length / 2) // Divide by 2 because we have duplicates
+      const itemWidth = 104; // 80px + 24px gap
+      const totalWidth = itemWidth * (items.length / 2); // Divide by 2 because we have duplicates
 
       // Set initial position
-      gsap.set(container, { x: direction === 1 ? 0 : -totalWidth })
+      gsap.set(container, { x: direction === 1 ? 0 : -totalWidth });
 
       // Create the infinite animation
-      const tl = gsap.timeline({ repeat: -1 })
+      const tl = gsap.timeline({ repeat: -1 });
 
       if (direction === 1) {
         // Move from 0 to -totalWidth
@@ -232,26 +233,26 @@ const About = () => {
           x: -totalWidth,
           duration: duration,
           ease: "none",
-        })
+        });
         // Reset to 0 instantly
-        tl.set(container, { x: 0 })
+        tl.set(container, { x: 0 });
       } else {
         // Move from -totalWidth to 0
         tl.to(container, {
           x: 0,
           duration: duration,
           ease: "none",
-        })
+        });
         // Reset to -totalWidth instantly
-        tl.set(container, { x: -totalWidth })
+        tl.set(container, { x: -totalWidth });
       }
 
-      return tl
-    }
+      return tl;
+    };
 
     // Setup infinite scroll for both rows
-    const frontendAnimation = setupInfiniteScroll(".frontend-scroll", 1, 25)
-    const backendAnimation = setupInfiniteScroll(".backend-scroll", -1, 30)
+    const frontendAnimation = setupInfiniteScroll(".frontend-scroll", 1, 25);
+    const backendAnimation = setupInfiniteScroll(".backend-scroll", -1, 30);
 
     // Make tech icons draggable
     const draggables = Draggable.create(".tech-item", {
@@ -269,17 +270,17 @@ const About = () => {
           duration: 0.2,
           ease: "power1.out",
           zIndex: 1000,
-        })
-        setDraggedCount((prev) => prev + 1)
+        });
+        setDraggedCount((prev) => prev + 1);
       },
       onDragEnd: function () {
         gsap.to(this.target, {
           scale: 1,
           duration: 0.3,
           ease: "elastic.out(1, 0.5)",
-        })
+        });
       },
-    })
+    });
 
     // Feature cards animation
     gsap.fromTo(
@@ -301,8 +302,8 @@ const About = () => {
           start: "top 80%",
           toggleActions: "play none none reverse",
         },
-      },
-    )
+      }
+    );
 
     // Title entrance animation
     gsap.fromTo(
@@ -324,35 +325,30 @@ const About = () => {
           end: "bottom 20%",
           toggleActions: "play none none reverse",
         },
-      },
-    )
+      }
+    );
 
     return () => {
       if (draggables) {
-        draggables.forEach((d) => d.kill())
+        draggables.forEach((d) => d.kill());
       }
-      if (frontendAnimation) frontendAnimation.kill()
-      if (backendAnimation) backendAnimation.kill()
-    }
-  }, [])
+      if (frontendAnimation) frontendAnimation.kill();
+      if (backendAnimation) backendAnimation.kill();
+    };
+  }, []);
 
   const stats = [
     { number: 150, label: "Projects Completed", suffix: "+" },
     { number: 50, label: "Happy Clients", suffix: "+" },
     { number: 99, label: "Success Rate", suffix: "%" },
     { number: 24, label: "Support Hours", suffix: "/7" },
-  ]
+  ];
 
+  const navigate = useNavigate(); 
 
   const navigateToContactForm = () => {
-    navigate("/contact#contact-form-section")
-    setTimeout(() => {
-      const contactFormSection = document.getElementById("contact-form-section")
-      if (contactFormSection) {
-        contactFormSection.scrollIntoView({ behavior: "smooth" })
-      }
-    }, 100)
-  }
+    navigate("/contact#contact-form-section");
+  };
 
   const features = [
     {
@@ -391,7 +387,7 @@ const About = () => {
       description: "Focused on delivering results that matter to your business",
       color: "from-red-500 to-pink-500",
     },
-  ]
+  ];
 
   // Render tech item component
   const TechItem = ({ tech, index, prefix }) => (
@@ -418,7 +414,7 @@ const About = () => {
         ></div>
       </div>
     </div>
-  )
+  );
 
   return (
     <div id="about" className="relative w-screen bg-white overflow-hidden">
@@ -464,15 +460,18 @@ const About = () => {
             <div ref={titleRef} className="text-center max-w-6xl mx-auto mb-8">
               <AnimatedTitle
                 title="Where Innovation Meets Imagination"
-                containerClass="text-4xl md:text-6xl lg:text-7xl font-black uppercase leading-tight text-black tracking-tight"
+                containerClass="text-4xl md:text-6xl lg:text-7xl font-black text-black uppercase leading-tight text-black tracking-tight"
               />
             </div>
 
             {/* Description */}
-            <div ref={descriptionRef} className="text-center max-w-4xl mx-auto space-y-6 mb-16">
+            <div
+              ref={descriptionRef}
+              className="text-center max-w-4xl mx-auto space-y-6 mb-16"
+            >
               <p className="text-lg md:text-xl lg:text-2xl font-medium text-gray-800 leading-relaxed">
-                Fueling creativity through code, design, and innovation, where your vision meets intelligent
-                engineering.
+                Fueling creativity through code, design, and innovation, where
+                your vision meets intelligent engineering.
               </p>
               <p className="text-lg md:text-xl text-[#519444] font-medium opacity-90">
                 Turning ideas into reality, one breakthrough at a time.
@@ -480,7 +479,10 @@ const About = () => {
             </div>
 
             {/* Stats Section - FIXED */}
-            <div ref={statsRef} className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-20">
+            <div
+              ref={statsRef}
+              className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-20"
+            >
               {stats.map((stat, index) => (
                 <div key={index} className="text-center group">
                   <div className="bg-white/80 backdrop-blur-sm border border-[#519444]/20 rounded-2xl p-6 hover:shadow-xl transition-all duration-300 hover:scale-105">
@@ -490,14 +492,19 @@ const About = () => {
                       </span>
                       <span>{stat.suffix}</span>
                     </div>
-                    <p className="text-sm md:text-base text-gray-600 font-medium">{stat.label}</p>
+                    <p className="text-sm md:text-base text-gray-600 font-medium">
+                      {stat.label}
+                    </p>
                   </div>
                 </div>
               ))}
             </div>
 
             {/* Features Grid */}
-            <div ref={featuresRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-20">
+            <div
+              ref={featuresRef}
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-20"
+            >
               {features.map((feature, index) => (
                 <div key={index} className="feature-card group">
                   <div className="bg-white/80 backdrop-blur-sm border border-gray-200 rounded-2xl p-6 hover:shadow-xl transition-all duration-300 hover:scale-105 hover:border-[#519444]/30">
@@ -506,8 +513,12 @@ const About = () => {
                     >
                       {feature.icon}
                     </div>
-                    <h3 className="text-xl font-bold text-gray-800 mb-3">{feature.title}</h3>
-                    <p className="text-gray-600 leading-relaxed">{feature.description}</p>
+                    <h3 className="text-xl font-bold text-gray-800 mb-3">
+                      {feature.title}
+                    </h3>
+                    <p className="text-gray-600 leading-relaxed">
+                      {feature.description}
+                    </p>
                   </div>
                 </div>
               ))}
@@ -520,25 +531,40 @@ const About = () => {
                   Our <span className="text-[#519444]">Technology Stack</span>
                 </h3>
                 <p className="text-lg text-gray-600 max-w-3xl mx-auto mb-6">
-                  Drag any technology to explore! Our expertise spans across modern frontend and backend technologies.
+                  Drag any technology to explore! Our expertise spans across
+                  modern frontend and backend technologies.
                 </p>
                 <div className="flex flex-wrap justify-center gap-4 text-sm text-gray-500">
-                  <span className="bg-gray-100 px-3 py-1 rounded-full">💡 Hover for details</span>
+                  <span className="bg-gray-100 px-3 py-1 rounded-full">
+                    💡 Hover for details
+                  </span>
                 </div>
               </div>
 
               {/* Frontend Row */}
               <div className="mb-8">
-                <h4 className="text-xl font-bold text-gray-700 mb-4 text-center">Frontend Technologies</h4>
+                <h4 className="text-xl font-bold text-gray-700 mb-4 text-center">
+                  Frontend Technologies
+                </h4>
                 <div className="relative overflow-hidden">
                   <div className="frontend-scroll flex gap-6 will-change-transform">
                     {/* First set */}
                     {frontendTechnologies.map((tech, index) => (
-                      <TechItem key={`frontend-1-${index}`} tech={tech} index={index} prefix="frontend-1" />
+                      <TechItem
+                        key={`frontend-1-${index}`}
+                        tech={tech}
+                        index={index}
+                        prefix="frontend-1"
+                      />
                     ))}
                     {/* Second set for seamless loop */}
                     {frontendTechnologies.map((tech, index) => (
-                      <TechItem key={`frontend-2-${index}`} tech={tech} index={index} prefix="frontend-2" />
+                      <TechItem
+                        key={`frontend-2-${index}`}
+                        tech={tech}
+                        index={index}
+                        prefix="frontend-2"
+                      />
                     ))}
                   </div>
                 </div>
@@ -546,16 +572,28 @@ const About = () => {
 
               {/* Backend Row */}
               <div>
-                <h4 className="text-xl font-bold text-gray-700 mb-4 text-center">Backend Technologies</h4>
+                <h4 className="text-xl font-bold text-gray-700 mb-4 text-center">
+                  Backend Technologies
+                </h4>
                 <div className="relative overflow-hidden">
                   <div className="backend-scroll flex gap-6 will-change-transform">
                     {/* First set */}
                     {backendTechnologies.map((tech, index) => (
-                      <TechItem key={`backend-1-${index}`} tech={tech} index={index} prefix="backend-1" />
+                      <TechItem
+                        key={`backend-1-${index}`}
+                        tech={tech}
+                        index={index}
+                        prefix="backend-1"
+                      />
                     ))}
                     {/* Second set for seamless loop */}
                     {backendTechnologies.map((tech, index) => (
-                      <TechItem key={`backend-2-${index}`} tech={tech} index={index} prefix="backend-2" />
+                      <TechItem
+                        key={`backend-2-${index}`}
+                        tech={tech}
+                        index={index}
+                        prefix="backend-2"
+                      />
                     ))}
                   </div>
                 </div>
@@ -580,16 +618,24 @@ const About = () => {
                         {hoveredTech.icon}
                       </div>
                       <div>
-                        <h3 className="font-bold text-lg">{hoveredTech.name}</h3>
-                        <p className="text-sm text-gray-400">{hoveredTech.category}</p>
+                        <h3 className="font-bold text-lg">
+                          {hoveredTech.name}
+                        </h3>
+                        <p className="text-sm text-gray-400">
+                          {hoveredTech.category}
+                        </p>
                       </div>
                     </div>
-                    <p className="text-sm text-gray-300 mb-3">{hoveredTech.description}</p>
+                    <p className="text-sm text-gray-300 mb-3">
+                      {hoveredTech.description}
+                    </p>
                     <div className="flex justify-between items-center">
                       <span className="text-xs bg-gray-800 px-2 py-1 rounded-full">
                         Experience: {hoveredTech.experience}
                       </span>
-                      <span className="text-xs text-gray-400">🖱️ Drag me around!</span>
+                      <span className="text-xs text-gray-400">
+                        🖱️ Drag me around!
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -599,13 +645,18 @@ const About = () => {
             {/* Call to Action */}
             <div className="text-center mb-16">
               <div className="bg-gradient-to-r from-[#519444]/10 to-transparent rounded-3xl p-8 md:p-12 border border-[#519444]/20">
-                <h3 className="text-2xl md:text-3xl font-bold text-gray-800 mb-4">Ready to Transform Your Ideas?</h3>
+                <h3 className="text-2xl md:text-3xl font-bold text-gray-800 mb-4">
+                  Ready to Transform Your Ideas?
+                </h3>
                 <p className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
-                  Let's collaborate to bring your vision to life with innovative solutions that drive growth and
-                  success.
+                  Let's collaborate to bring your vision to life with innovative
+                  solutions that drive growth and success.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                  <button onClick={navigateToContactForm} className="px-8 py-4 bg-[#519444] text-white font-semibold rounded-xl hover:bg-black transition-all duration-300 hover:scale-105 shadow-lg">
+                  <button
+                    onClick={navigateToContactForm}
+                    className="px-8 py-4 bg-[#519444] text-white font-semibold rounded-xl hover:bg-black transition-all duration-300 hover:scale-105 shadow-lg"
+                  >
                     Start Your Project
                   </button>
                 </div>
@@ -618,7 +669,7 @@ const About = () => {
         <ScrollRevealinfo />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default About
+export default About;
