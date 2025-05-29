@@ -12,18 +12,18 @@ import Footer from "./Components/Footer";
 const App = () => {
   return (
     <ToastProvider>
-      <div className="relative min-h-screen w-screen overflow-x-hidden">
-        <Navbar />
-        <Router>
+      <Router>
+        <div className="relative min-h-screen w-screen overflow-x-hidden">
+          <Navbar />
           <Routes>
             <Route path="/" element={<Landing />} />
             <Route path="/career" element={<CareerPage />} />
             <Route path="/contact" element={<ContactPage />} />
             <Route path="/services" element={<Service />} />
           </Routes>
-        </Router>
-        <Footer />
-      </div>
+          <Footer />
+        </div>
+      </Router>
     </ToastProvider>
   );
 };

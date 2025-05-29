@@ -3,6 +3,7 @@
 import { useEffect, useState, useRef } from "react"
 import { useWindowScroll } from "react-use"
 import gsap from "gsap"
+import { useNavigate } from "react-router-dom"
 
 const Navbar = () => {
   const navbarref = useRef(null)
@@ -85,10 +86,13 @@ const Navbar = () => {
     }
   }, [isMobileMenuOpen])
 
+ 
+  const navigate = useNavigate();
+
   const handleNavigation = (path) => {
-    setIsMobileMenuOpen(false)
-    window.location.href = path
-  }
+    setIsMobileMenuOpen(false);
+    navigate(path); // ✅ client-side routing, no 404
+  };
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen)
