@@ -1,0 +1,229 @@
+/* Base styles */
+body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+/* Gradient container */
+.gradient-container {
+  background: linear-gradient(40deg, var(--gradient-background-start), var(--gradient-background-end));
+}
+
+/* Text gradient */
+.gradient-text {
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.2));
+}
+
+/* Filter for non-Safari browsers */
+.filter-blur {
+  filter: url(#blurMe) blur(40px);
+}
+
+/* Gradient circles base styles */
+.gradient-circle {
+  position: absolute;
+  width: var(--size);
+  height: var(--size);
+  top: calc(50% - var(--size) / 2);
+  left: calc(50% - var(--size) / 2);
+  mix-blend-mode: var(--blending-value);
+}
+
+/* First gradient circle */
+.first-circle {
+  background: radial-gradient(circle at center, var(--first-color) 0, var(--first-color) 50%) no-repeat;
+  transform-origin: center center;
+  opacity: 100%;
+  animation: rotate-first 25s linear infinite;
+}
+
+/* Second gradient circle */
+.second-circle {
+  background: radial-gradient(circle at center, rgba(var(--second-color), 0.8) 0, rgba(var(--second-color), 0) 50%)
+    no-repeat;
+  transform-origin: calc(50% - 400px);
+  opacity: 100%;
+  animation: rotate-second 30s linear infinite;
+}
+
+/* Third gradient circle */
+.third-circle {
+  background: radial-gradient(circle at center, rgba(var(--third-color), 0.8) 0, rgba(var(--third-color), 0) 50%)
+    no-repeat;
+  transform-origin: calc(50% + 400px);
+  opacity: 100%;
+  animation: rotate-third 25s linear infinite;
+}
+
+/* Fourth gradient circle */
+.fourth-circle {
+  background: radial-gradient(circle at center, rgba(var(--fourth-color), 0.8) 0, rgba(var(--fourth-color), 0) 50%)
+    no-repeat;
+  transform-origin: calc(50% - 200px);
+  opacity: 70%;
+  animation: rotate-fourth 40s linear infinite;
+}
+
+/* Fifth gradient circle */
+.fifth-circle {
+  background: radial-gradient(circle at center, rgba(var(--fifth-color), 0.8) 0, rgba(var(--fifth-color), 0) 50%)
+    no-repeat;
+  transform-origin: calc(50% - 800px) calc(50% + 800px);
+  opacity: 100%;
+  animation: rotate-fifth 40s linear infinite;
+}
+
+/* Interactive gradient */
+.interactive-gradient {
+  position: absolute;
+  background: radial-gradient(circle at center, rgba(var(--pointer-color), 0.8) 0, rgba(var(--pointer-color), 0) 50%)
+    no-repeat;
+  mix-blend-mode: var(--blending-value);
+  width: 100%;
+  height: 100%;
+  top: -50%;
+  left: -50%;
+  opacity: 70%;
+}
+
+/* Animation keyframes */
+@keyframes rotate-first {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes rotate-second {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(-360deg);
+  }
+}
+
+@keyframes rotate-third {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes rotate-fourth {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(-360deg);
+  }
+}
+
+@keyframes rotate-fifth {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Tailwind utility classes used in the component */
+.absolute {
+  position: absolute;
+}
+.relative {
+  position: relative;
+}
+.hidden {
+  display: none;
+}
+.h-screen {
+  height: 100vh;
+}
+.w-screen {
+  width: 100vw;
+}
+.h-full {
+  height: 100%;
+}
+.w-full {
+  width: 100%;
+}
+.inset-0 {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+.top-0 {
+  top: 0;
+}
+.left-0 {
+  left: 0;
+}
+.z-50 {
+  z-index: 50;
+}
+.overflow-hidden {
+  overflow: hidden;
+}
+.blur-lg {
+  filter: blur(16px);
+}
+.blur-2xl {
+  filter: blur(24px);
+}
+.flex {
+  display: flex;
+}
+.items-center {
+  align-items: center;
+}
+.justify-center {
+  justify-content: center;
+}
+.text-white {
+  color: white;
+}
+.font-bold {
+  font-weight: 700;
+}
+.px-4 {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+.pointer-events-none {
+  pointer-events: none;
+}
+.text-3xl {
+  font-size: 1.875rem;
+  line-height: 2.25rem;
+}
+.text-center {
+  text-align: center;
+}
+
+/* Responsive text sizes */
+@media (min-width: 768px) {
+  .md\:text-4xl {
+    font-size: 2.25rem;
+    line-height: 2.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .lg\:text-7xl {
+    font-size: 4.5rem;
+    line-height: 1;
+  }
+}

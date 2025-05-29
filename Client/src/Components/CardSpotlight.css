@@ -1,0 +1,49 @@
+.from-gray-950 {
+  --tw-gradient-from: #030712;
+  --tw-gradient-to: rgb(3 7 18 / 0);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
+.from-green-950 {
+  --tw-gradient-from: #052e16;
+  --tw-gradient-to: rgb(5 46 22 / 0);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
+.to-\[84\%\] {
+  --tw-gradient-to: transparent 84%;
+}
+
+.bg-gradient-to-t {
+  background-image: linear-gradient(to top, var(--tw-gradient-stops));
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+
+.group\/spotlight:hover .group-hover\/spotlight\:opacity-80 {
+  opacity: 0.8;
+}
+
+
+.bg-green-950 {
+  background-color: #052e16;
+}
+
+.border-green-900 {
+  border-color: #14532d;
+}
+
+.text-green-500 {
+  color: #22c55e;
+}
