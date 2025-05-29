@@ -17,9 +17,9 @@ app.use('/api', messagesRoutes);
 app.use('/api', verdictRoutes);
 app.use('/api', resumeRoutes);
 
-app.get("/", async (req, res) => {
-  console.log("Hello World");
-});
+// app.get("/", async (req, res) => {
+//   console.log("Hello World");
+// });
 app.listen(process.env.PORT || 3000, () => {
   console.log(`Server is running on port ${process.env.PORT || 3000}`);
 });
